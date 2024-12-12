@@ -1,0 +1,52 @@
+const mockByliEinstaklingar = [
+    {
+        manntal_id: 1,
+        heimili_id: 101,
+        einstaklingur_id: 1001,
+        einstaklingur_rod: 1,
+        manntal_lysing: "Bóndi",
+        heimilisstada: 1,
+        nafn: "Jón Jónsson",
+        fornafn: "Jón",
+        eftirnafn: "Jónsson",
+        kyn: 1,
+        aldur: 45,
+        heimili_lysing: "Bær",
+        byli_id: 201,
+        byli_nafn: "Hlíðarkot",
+        logbyli_id: 301,
+        logbyli_nafn: "Hlíð",
+        tilheyrir_byli_id: null,
+        dyrleiki: 12,
+        jardabok: true,
+        manntal: true,
+        kvikfjartal: true,
+        bjorn_l: false
+    },
+    {
+        manntal_id: 2,
+        heimili_id: 101,
+        einstaklingur_id: 1002,
+        einstaklingur_rod: 2,
+        manntal_lysing: "Húsfreyja",
+        heimilisstada: 2,
+        nafn: "Guðrún Sigurðardóttir",
+        fornafn: "Guðrún",
+        eftirnafn: "Sigurðardóttir",
+        kyn: 2,
+        aldur: 40,
+        heimili_lysing: "Bær",
+        byli_id: 201,
+        byli_nafn: "Hlíðarkot",
+        logbyli_id: 301,
+        logbyli_nafn: "Hlíð",
+        tilheyrir_byli_id: null,
+        dyrleiki: 12,
+        jardabok: true,
+        manntal: true,
+        kvikfjartal: true,
+        bjorn_l: false
+    }
+];
+
+module.exports = mockByliEinstaklingar; 
