@@ -1,0 +1,1090 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "1703 Census API",
+    "description": "API for accessing historical records from the 1703 Icelandic census, the first complete census of any population in history",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Demographics",
+      "description": "Demographic statistics endpoints"
+    },
+    {
+      "name": "Properties",
+      "description": "Property-related statistics endpoints"
+    },
+    {
+      "name": "Livestock",
+      "description": "Livestock statistics endpoints"
+    }
+  ],
+  "paths": {
+    "/api/demographics/population/districts": {
+      "get": {
+        "tags": ["Demographics"],
+        "summary": "Get population by district",
+        "description": "Retrieve population statistics for each district",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DistrictPopulation"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demographics/population/counties": {
+      "get": {
+        "tags": ["Demographics"],
+        "summary": "Get population by county",
+        "description": "Retrieve population statistics for each county",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CountyPopulation"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demographics/population/age-gender": {
+      "get": {
+        "tags": ["Demographics"],
+        "summary": "Get population by age and gender",
+        "description": "Retrieve population statistics grouped by age groups and gender",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgeGenderStats"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demographics/marital-status": {
+      "get": {
+        "tags": ["Demographics"],
+        "summary": "Get marital status statistics",
+        "description": "Retrieve statistics about marital status distribution",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MaritalStatus"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demographics/households/size": {
+      "get": {
+        "tags": ["Demographics"],
+        "summary": "Get household size statistics",
+        "description": "Retrieve statistics about household sizes",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseholdSize"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demographics/households/type": {
+      "get": {
+        "tags": ["Demographics"],
+        "summary": "Get household type statistics",
+        "description": "Retrieve statistics about different types of households",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseholdType"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demographics/households/heads": {
+      "get": {
+        "tags": ["Demographics"],
+        "summary": "Get household heads statistics",
+        "description": "Retrieve statistics about household heads",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseholdHeads"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demographics/household-status": {
+      "get": {
+        "tags": ["Demographics"],
+        "summary": "Get household status statistics",
+        "description": "Retrieve statistics about household status",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HouseholdStatus"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/demographics/occupational-status": {
+      "get": {
+        "tags": ["Demographics"],
+        "summary": "Get occupational status statistics",
+        "description": "Retrieve statistics about occupational status",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OccupationalStatus"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/properties/occupancy": {
+      "get": {
+        "tags": ["Properties"],
+        "summary": "Get land occupancy statistics",
+        "description": "Retrieve statistics about land occupancy",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LandOccupancy"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/properties/rental-terms": {
+      "get": {
+        "tags": ["Properties"],
+        "summary": "Get property rental terms",
+        "description": "Retrieve statistics about property rental terms",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RentalTerms"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/properties/property-types": {
+      "get": {
+        "tags": ["Properties"],
+        "summary": "Get property types statistics",
+        "description": "Retrieve statistics about different types of properties",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyTypes"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/properties/property-value": {
+      "get": {
+        "tags": ["Properties"],
+        "summary": "Get property value statistics",
+        "description": "Retrieve statistics about property values",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyValue"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/properties/ownership": {
+      "get": {
+        "tags": ["Properties"],
+        "summary": "Get property ownership statistics",
+        "description": "Retrieve statistics about property ownership",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyOwnership"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/properties/distribution": {
+      "get": {
+        "tags": ["Properties"],
+        "summary": "Get property distribution statistics",
+        "description": "Retrieve statistics about property distribution",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PropertyDistribution"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/livestock/cattle": {
+      "get": {
+        "tags": ["Livestock"],
+        "summary": "Get cattle statistics",
+        "description": "Retrieve statistics about cattle population",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CattleStats"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/livestock/sheep": {
+      "get": {
+        "tags": ["Livestock"],
+        "summary": "Get sheep statistics",
+        "description": "Retrieve statistics about sheep population",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SheepStats"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/livestock/goats": {
+      "get": {
+        "tags": ["Livestock"],
+        "summary": "Get goat statistics",
+        "description": "Retrieve statistics about goat population",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GoatStats"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/livestock/horses": {
+      "get": {
+        "tags": ["Livestock"],
+        "summary": "Get horse statistics",
+        "description": "Retrieve statistics about horse population",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HorseStats"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/livestock/owners": {
+      "get": {
+        "tags": ["Livestock"],
+        "summary": "Get livestock owners statistics",
+        "description": "Retrieve statistics about livestock owners",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LivestockOwners"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/livestock/value": {
+      "get": {
+        "tags": ["Livestock"],
+        "summary": "Get livestock value statistics",
+        "description": "Retrieve statistics about livestock value",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LivestockValue"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/livestock/summary": {
+      "get": {
+        "tags": ["Livestock"],
+        "summary": "Get livestock summary statistics",
+        "description": "Retrieve summary statistics for all livestock",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LivestockSummary"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DistrictPopulation": {
+        "type": "object",
+        "properties": {
+          "Hreppur_nr": {
+            "type": "integer",
+            "description": "District number"
+          },
+          "Hreppur_nafn": {
+            "type": "string",
+            "description": "District name"
+          },
+          "population": {
+            "type": "integer",
+            "description": "Total population in the district"
+          }
+        }
+      },
+      "CountyPopulation": {
+        "type": "object",
+        "properties": {
+          "Sysla_nr": {
+            "type": "integer",
+            "description": "County number"
+          },
+          "county_name": {
+            "type": "string",
+            "description": "County name"
+          },
+          "population": {
+            "type": "integer",
+            "description": "Total population in the county"
+          }
+        }
+      },
+      "AgeGenderStats": {
+        "type": "object",
+        "properties": {
+          "gender": {
+            "type": "string",
+            "description": "Gender (Karl/Kona)"
+          },
+          "age_group": {
+            "type": "string",
+            "description": "Age group"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of people in this group"
+          }
+        }
+      },
+      "MaritalStatus": {
+        "type": "object",
+        "properties": {
+          "marital_status": {
+            "type": "string",
+            "description": "Marital status category"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of people in this category"
+          }
+        }
+      },
+      "HouseholdSize": {
+        "type": "object",
+        "properties": {
+          "household_size": {
+            "type": "integer",
+            "description": "Size of household"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of households of this size"
+          }
+        }
+      },
+      "HouseholdType": {
+        "type": "object",
+        "properties": {
+          "household_type": {
+            "type": "string",
+            "description": "Type of household"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of households of this type"
+          }
+        }
+      },
+      "HouseholdHeads": {
+        "type": "object",
+        "properties": {
+          "gender": {
+            "type": "string",
+            "description": "Gender of household head"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of household heads"
+          },
+          "average_age": {
+            "type": "number",
+            "description": "Average age of household heads"
+          }
+        }
+      },
+      "HouseholdStatus": {
+        "type": "object",
+        "properties": {
+          "household_status": {
+            "type": "string",
+            "description": "Household status"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of people with this status"
+          }
+        }
+      },
+      "OccupationalStatus": {
+        "type": "object",
+        "properties": {
+          "occupation": {
+            "type": "string",
+            "description": "Occupation type"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of people with this occupation"
+          }
+        }
+      },
+      "LandOccupancy": {
+        "type": "object",
+        "properties": {
+          "inhabited": {
+            "type": "integer",
+            "description": "Number of inhabited properties"
+          },
+          "abandoned": {
+            "type": "integer",
+            "description": "Number of abandoned properties"
+          },
+          "owner_occupied": {
+            "type": "integer",
+            "description": "Number of owner-occupied properties"
+          },
+          "tenant_occupied": {
+            "type": "integer",
+            "description": "Number of tenant-occupied properties"
+          }
+        }
+      },
+      "RentalTerms": {
+        "type": "object",
+        "properties": {
+          "land_rent": {
+            "type": "number",
+            "description": "Land rent amount"
+          },
+          "livestock_units": {
+            "type": "number",
+            "description": "Number of livestock units"
+          },
+          "obligations": {
+            "type": "string",
+            "description": "Additional obligations"
+          }
+        }
+      },
+      "PropertyTypes": {
+        "type": "object",
+        "properties": {
+          "logbyli_count": {
+            "type": "integer",
+            "description": "Number of main farms"
+          },
+          "hjaleigur_count": {
+            "type": "integer",
+            "description": "Number of auxiliary farms"
+          },
+          "thurrabud_count": {
+            "type": "integer",
+            "description": "Number of cottages"
+          },
+          "husmenn_count": {
+            "type": "integer",
+            "description": "Number of crofts"
+          }
+        }
+      },
+      "PropertyValue": {
+        "type": "object",
+        "properties": {
+          "property_type": {
+            "type": "string",
+            "description": "Type of property"
+          },
+          "average_value": {
+            "type": "number",
+            "description": "Average property value"
+          },
+          "min_value": {
+            "type": "number",
+            "description": "Minimum property value"
+          },
+          "max_value": {
+            "type": "number",
+            "description": "Maximum property value"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of properties"
+          }
+        }
+      },
+      "PropertyOwnership": {
+        "type": "object",
+        "properties": {
+          "ownership_type": {
+            "type": "string",
+            "description": "Type of ownership"
+          },
+          "count": {
+            "type": "integer",
+            "description": "Number of properties"
+          }
+        }
+      },
+      "PropertyDistribution": {
+        "type": "object",
+        "properties": {
+          "total_share": {
+            "type": "number",
+            "description": "Total property share"
+          },
+          "land_share": {
+            "type": "number",
+            "description": "Land share"
+          },
+          "livestock_share": {
+            "type": "number",
+            "description": "Livestock share"
+          }
+        }
+      },
+      "CattleStats": {
+        "type": "object",
+        "properties": {
+          "cows": {
+            "type": "integer",
+            "description": "Number of cows"
+          },
+          "heifers": {
+            "type": "integer",
+            "description": "Number of heifers"
+          },
+          "dry_cattle": {
+            "type": "integer",
+            "description": "Number of dry cattle"
+          },
+          "calves": {
+            "type": "integer",
+            "description": "Number of calves"
+          }
+        }
+      },
+      "SheepStats": {
+        "type": "object",
+        "properties": {
+          "ewes": {
+            "type": "integer",
+            "description": "Number of ewes"
+          },
+          "rams": {
+            "type": "integer",
+            "description": "Number of rams"
+          },
+          "yearling_sheep": {
+            "type": "integer",
+            "description": "Number of yearling sheep"
+          },
+          "lambs": {
+            "type": "integer",
+            "description": "Number of lambs"
+          }
+        }
+      },
+      "GoatStats": {
+        "type": "object",
+        "properties": {
+          "goats": {
+            "type": "integer",
+            "description": "Number of goats"
+          },
+          "bucks": {
+            "type": "integer",
+            "description": "Number of bucks"
+          },
+          "yearling_goats": {
+            "type": "integer",
+            "description": "Number of yearling goats"
+          },
+          "kids": {
+            "type": "integer",
+            "description": "Number of kids"
+          }
+        }
+      },
+      "HorseStats": {
+        "type": "object",
+        "properties": {
+          "stallions_geldings": {
+            "type": "integer",
+            "description": "Number of stallions and geldings"
+          },
+          "mares": {
+            "type": "integer",
+            "description": "Number of mares"
+          },
+          "young_horses": {
+            "type": "integer",
+            "description": "Number of young horses"
+          }
+        }
+      },
+      "LivestockOwners": {
+        "type": "object",
+        "properties": {
+          "Einst_nr": {
+            "type": "integer",
+            "description": "Individual ID"
+          },
+          "Fullt_nafn": {
+            "type": "string",
+            "description": "Full name"
+          },
+          "livestock_types": {
+            "type": "integer",
+            "description": "Number of different livestock types owned"
+          },
+          "total_animals": {
+            "type": "integer",
+            "description": "Total number of animals owned"
+          }
+        }
+      },
+      "LivestockValue": {
+        "type": "object",
+        "properties": {
+          "total_value": {
+            "type": "integer",
+            "description": "Total value of all livestock"
+          },
+          "breakdown": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "Kvikfe_nr": {
+                  "type": "integer",
+                  "description": "Livestock type ID"
+                },
+                "livestock_type": {
+                  "type": "string",
+                  "description": "Type of livestock"
+                },
+                "unit_value": {
+                  "type": "integer",
+                  "description": "Value per unit"
+                },
+                "count": {
+                  "type": "integer",
+                  "description": "Number of animals"
+                },
+                "total_value": {
+                  "type": "integer",
+                  "description": "Total value for this type"
+                }
+              }
+            }
+          }
+        }
+      },
+      "LivestockSummary": {
+        "type": "object",
+        "properties": {
+          "total_cattle": {
+            "type": "integer",
+            "description": "Total number of cattle"
+          },
+          "total_sheep": {
+            "type": "integer",
+            "description": "Total number of sheep"
+          },
+          "total_goats": {
+            "type": "integer",
+            "description": "Total number of goats"
+          },
+          "total_horses": {
+            "type": "integer",
+            "description": "Total number of horses"
+          },
+          "total_owners": {
+            "type": "integer",
+            "description": "Total number of livestock owners"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Error status",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message",
+            "example": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+} 
