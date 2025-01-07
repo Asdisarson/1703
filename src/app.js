@@ -1,32 +1,26 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const { errorHandler } = require('./middleware/errorHandler');
-const routes = require('./routes');
-
-// Load environment variables
+const morgan = require('morgan');
 require('dotenv').config();
+
+const { errorHandler } = require('./middleware/errorHandler');
+const individualRoutes = require('./routes/individualRoutes');
+const householdRoutes = require('./routes/householdRoutes');
+const regionRoutes = require('./routes/regionRoutes');
 
 const app = express();
 
-// Security middleware
+// Middleware
 app.use(helmet());
 app.use(cors());
-
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100 // limit each IP to 100 requests per windowMs
-});
-app.use(limiter);
-
-// Body parser
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 // Routes
-app.use('/api', routes);
+app.use('/api/v1/individuals', individualRoutes);
+app.use('/api/v1/households', householdRoutes);
+app.use('/api/v1/regions', regionRoutes);
 
 // Error handling
 app.use(errorHandler);
@@ -34,9 +28,15 @@ app.use(errorHandler);
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
-    status: 'fail',
+    status: 'error',
     message: 'Route not found'
   });
 });
 
-module.exports = app;
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+module.exports = app; 
