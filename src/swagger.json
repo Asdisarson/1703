@@ -1,0 +1,317 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "1703 Census API",
+    "description": "API for accessing the 1703 Icelandic census data, providing detailed statistics about population, farms, and livestock.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "API Support",
+      "email": "support@1703census.is"
+    }
+  },
+  "servers": [
+    {
+      "url": "/api/v1",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Population",
+      "description": "Population statistics endpoints"
+    },
+    {
+      "name": "Statistics",
+      "description": "General demographic statistics endpoints"
+    },
+    {
+      "name": "Farms",
+      "description": "Farm statistics and information endpoints"
+    },
+    {
+      "name": "Livestock",
+      "description": "Livestock statistics endpoints"
+    }
+  ],
+  "paths": {
+    "/population/total": {
+      "get": {
+        "tags": ["Population"],
+        "summary": "Get total population count",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer",
+                          "example": 50000
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/population/by-district": {
+      "get": {
+        "tags": ["Population"],
+        "summary": "Get population by district",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "Hreppur_nr": {
+                            "type": "integer",
+                            "example": 1
+                          },
+                          "Hreppur_nafn": {
+                            "type": "string",
+                            "example": "Test District"
+                          },
+                          "population": {
+                            "type": "integer",
+                            "example": 1000
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/farms/occupancy": {
+      "get": {
+        "tags": ["Farms"],
+        "summary": "Get farm occupancy statistics",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "inhabited": {
+                          "type": "integer",
+                          "example": 800
+                        },
+                        "abandoned": {
+                          "type": "integer",
+                          "example": 200
+                        },
+                        "owner_occupied": {
+                          "type": "integer",
+                          "example": 600
+                        },
+                        "tenant_occupied": {
+                          "type": "integer",
+                          "example": 200
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/farms/{byliNr}": {
+      "get": {
+        "tags": ["Farms"],
+        "summary": "Get farm details by ID",
+        "parameters": [
+          {
+            "name": "byliNr",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Farm ID (byli_nr)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "Byli_nr": {
+                          "type": "string",
+                          "example": "1"
+                        },
+                        "Byli_nafn": {
+                          "type": "string",
+                          "example": "Test Farm"
+                        },
+                        "farm_type": {
+                          "type": "string",
+                          "example": "Livestock"
+                        },
+                        "value": {
+                          "type": "integer",
+                          "example": 75000
+                        },
+                        "rent": {
+                          "type": "integer",
+                          "example": 5000
+                        },
+                        "occupancy_type": {
+                          "type": "string",
+                          "example": "Owner Occupied"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Farm not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "error"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Farm not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/livestock/cattle": {
+      "get": {
+        "tags": ["Livestock"],
+        "summary": "Get cattle statistics",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "total": {
+                          "type": "integer",
+                          "example": 1000
+                        },
+                        "details": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "example": "Cattle"
+                              },
+                              "category": {
+                                "type": "string",
+                                "example": "Dairy"
+                              },
+                              "count": {
+                                "type": "integer",
+                                "example": 500
+                              },
+                              "total_value": {
+                                "type": "integer",
+                                "example": 250000
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "error"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+} 
