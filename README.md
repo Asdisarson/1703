@@ -1,29 +1,30 @@
 # 1703 Census API
 
-A RESTful API providing access to the 1703 Icelandic census data, including detailed statistics about population, farms, and livestock.
+API for accessing the 1703 Icelandic census data, providing detailed statistics about population, farms, and livestock.
 
 ## Features
 
-- Population statistics by district and county
-- Detailed farm information and statistics
-- Comprehensive livestock data
-- Demographic statistics
-- Interactive API documentation
+- Population statistics (total, by district, by county)
+- Farm information (occupancy, rental terms, property types, values)
+- Livestock statistics (cattle, sheep, goats, horses)
+- Demographic statistics (age, gender, marital status)
+- Household statistics (sizes, types, status)
+- Comprehensive API documentation with Swagger UI
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm (v6 or higher)
-- MySQL (v8 or higher)
+- Node.js >= 14.0.0
+- npm or yarn
+- MySQL (for production)
 
 ### Installation
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/1703-census-api.git
-   cd 1703-census-api
+   git clone https://github.com/Asdisarson/1703.git
+   cd 1703
    ```
 
 2. Install dependencies:
@@ -31,81 +32,93 @@ A RESTful API providing access to the 1703 Icelandic census data, including deta
    npm install
    ```
 
-3. Set up environment variables:
+3. Create a `.env` file based on `.env.example`:
    ```bash
    cp .env.example .env
    ```
-   Edit `.env` with your database credentials and other configuration.
 
-4. Start the server:
+4. Start the development server:
    ```bash
-   # Development
    npm run dev
-
-   # Production
-   npm start
    ```
 
-The API will be available at `http://localhost:3000/api/v1`
-API documentation will be available at `http://localhost:3000/api-docs`
+The API will be available at `http://localhost:3000` with documentation at `http://localhost:3000/api-docs`.
 
-## API Documentation
+## Available Endpoints
 
-### Base URL
-All API endpoints are prefixed with `/api/v1`
+### Population
 
-### Available Endpoints
+- `GET /api/v1/population/total` - Get total population count
+- `GET /api/v1/population/by-district` - Get population by district
+- `GET /api/v1/population/by-county` - Get population by county
 
-#### Population
-- `GET /population/total` - Get total population count
-- `GET /population/by-district` - Get population by district
-- `GET /population/by-county` - Get population by county
+### Farms
 
-#### Farms
-- `GET /farms/occupancy` - Get farm occupancy statistics
-- `GET /farms/rental-terms` - Get rental terms statistics
-- `GET /farms/property-types` - Get property type statistics
-- `GET /farms/property-values` - Get property value statistics
-- `GET /farms/ownership` - Get ownership statistics
-- `GET /farms/distribution` - Get property distribution statistics
-- `GET /farms/:byliNr` - Get detailed information about a specific farm
+- `GET /api/v1/farms/occupancy` - Get farm occupancy statistics
+- `GET /api/v1/farms/rental-terms` - Get rental terms statistics
+- `GET /api/v1/farms/property-types` - Get property type statistics
+- `GET /api/v1/farms/property-values` - Get property value statistics
+- `GET /api/v1/farms/ownership` - Get ownership statistics
+- `GET /api/v1/farms/distribution` - Get property distribution
+- `GET /api/v1/farms/:byliNr` - Get detailed information about a specific farm
 
-#### Livestock
-- `GET /livestock/cattle` - Get cattle statistics
-- `GET /livestock/sheep` - Get sheep statistics
-- `GET /livestock/goats` - Get goat statistics
-- `GET /livestock/horses` - Get horse statistics
-- `GET /livestock/owners` - Get livestock owner statistics
-- `GET /livestock/value` - Get livestock value statistics
-- `GET /livestock/summary` - Get summary of all livestock types
+### Livestock
 
-#### Statistics
-- `GET /statistics/demographics/age-gender` - Get age and gender statistics
-- `GET /statistics/demographics/marital-status` - Get marital status statistics
-- `GET /statistics/households/sizes` - Get household size statistics
-- `GET /statistics/households/types` - Get household type statistics
-- `GET /statistics/status/household` - Get household status statistics
-- `GET /statistics/status/occupational` - Get occupational statistics
+- `GET /api/v1/livestock/cattle` - Get cattle statistics
+- `GET /api/v1/livestock/sheep` - Get sheep statistics
+- `GET /api/v1/livestock/goats` - Get goat statistics
+- `GET /api/v1/livestock/horses` - Get horse statistics
+- `GET /api/v1/livestock/owners` - Get livestock owner statistics
+- `GET /api/v1/livestock/value` - Get livestock value statistics
+- `GET /api/v1/livestock/summary` - Get summary of all livestock types
+
+### Statistics
+
+- `GET /api/v1/statistics/demographics/age-gender` - Get age and gender statistics
+- `GET /api/v1/statistics/demographics/marital-status` - Get marital status statistics
+- `GET /api/v1/statistics/households/sizes` - Get household size statistics
+- `GET /api/v1/statistics/households/types` - Get household type statistics
+- `GET /api/v1/statistics/status/household` - Get household status statistics
+- `GET /api/v1/statistics/status/occupational` - Get occupational status statistics
 
 ## Development
 
 ### Running Tests
+
 ```bash
-# Run all tests
 npm test
+```
 
-# Run tests with coverage
-npm run test:coverage
-
-# Run tests in watch mode
+For watching mode:
+```bash
 npm run test:watch
 ```
 
-### Code Style
-This project uses ESLint for code style enforcement. Run the linter:
+For coverage report:
 ```bash
-npm run lint
+npm run test:coverage
 ```
+
+### Code Style
+
+The project uses ESLint and Prettier for code formatting. Run:
+
+```bash
+npm run lint     # Check for issues
+npm run lint:fix # Fix issues automatically
+npm run format   # Format code with Prettier
+```
+
+## API Documentation
+
+The API documentation is available through Swagger UI at the root route (`/`) or `/api-docs`. The documentation includes:
+
+- Detailed endpoint descriptions
+- Request/response schemas
+- Example responses
+- Try-it-out functionality
+
+You can also view the documentation on SwaggerHub: [1703 Census API Documentation](https://app.swaggerhub.com/apis-docs/Islandsvefir/1703/1.0.0)
 
 ## Contributing
 
@@ -121,5 +134,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- Data source: National Archives of Iceland
-- Historical context: [1703 Census of Iceland](https://en.wikipedia.org/wiki/1703_census_of_Iceland) 
+- Data source: [1703 Icelandic Census](https://www.manntal.is/leit/thjodhagir-1703)
+- Built with Express.js and Node.js
+- Documentation powered by Swagger/OpenAPI 

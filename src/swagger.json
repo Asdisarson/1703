@@ -2,16 +2,20 @@
   "openapi": "3.0.0",
   "info": {
     "title": "1703 Census API",
-    "description": "API for accessing the 1703 Icelandic census data, providing detailed statistics about population, farms, and livestock.",
+    "description": "API for accessing the 1703 Icelandic census data, including detailed statistics about population, farms, and livestock.",
     "version": "1.0.0",
     "contact": {
-      "name": "API Support",
-      "email": "support@1703census.is"
+      "name": "Islandsvefir",
+      "url": "https://github.com/Asdisarson/1703"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/Asdisarson/1703/blob/main/LICENSE"
     }
   },
   "servers": [
     {
-      "url": "/api/v1",
+      "url": "http://localhost:3000/api/v1",
       "description": "Development server"
     }
   ],
@@ -21,16 +25,16 @@
       "description": "Population statistics endpoints"
     },
     {
-      "name": "Statistics",
-      "description": "General demographic statistics endpoints"
-    },
-    {
       "name": "Farms",
       "description": "Farm statistics and information endpoints"
     },
     {
       "name": "Livestock",
       "description": "Livestock statistics endpoints"
+    },
+    {
+      "name": "Statistics",
+      "description": "General demographic and household statistics"
     }
   ],
   "paths": {
@@ -38,26 +42,18 @@
       "get": {
         "tags": ["Population"],
         "summary": "Get total population count",
+        "description": "Returns the total population count from the 1703 census",
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "total": {
-                          "type": "integer",
-                          "example": 50000
-                        }
-                      }
+                    "total": {
+                      "type": "number",
+                      "example": 50000
                     }
                   }
                 }
@@ -71,33 +67,26 @@
       "get": {
         "tags": ["Population"],
         "summary": "Get population by district",
+        "description": "Returns population statistics broken down by district",
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
-                    "data": {
+                    "districts": {
                       "type": "array",
                       "items": {
                         "type": "object",
                         "properties": {
-                          "Hreppur_nr": {
-                            "type": "integer",
-                            "example": 1
-                          },
-                          "Hreppur_nafn": {
+                          "name": {
                             "type": "string",
-                            "example": "Test District"
+                            "example": "Árnessýsla"
                           },
                           "population": {
-                            "type": "integer",
+                            "type": "number",
                             "example": 1000
                           }
                         }
@@ -115,38 +104,26 @@
       "get": {
         "tags": ["Farms"],
         "summary": "Get farm occupancy statistics",
+        "description": "Returns statistics about farm occupancy rates",
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
+                    "occupied": {
+                      "type": "number",
+                      "example": 800
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "inhabited": {
-                          "type": "integer",
-                          "example": 800
-                        },
-                        "abandoned": {
-                          "type": "integer",
-                          "example": 200
-                        },
-                        "owner_occupied": {
-                          "type": "integer",
-                          "example": 600
-                        },
-                        "tenant_occupied": {
-                          "type": "integer",
-                          "example": 200
-                        }
-                      }
+                    "vacant": {
+                      "type": "number",
+                      "example": 200
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 1000
                     }
                   }
                 }
@@ -159,58 +136,46 @@
     "/farms/{byliNr}": {
       "get": {
         "tags": ["Farms"],
-        "summary": "Get farm details by ID",
+        "summary": "Get farm details",
+        "description": "Returns detailed information about a specific farm",
         "parameters": [
           {
             "name": "byliNr",
             "in": "path",
             "required": true,
+            "description": "Farm identifier number",
             "schema": {
-              "type": "string"
-            },
-            "description": "Farm ID (byli_nr)"
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
+                    "byliNr": {
+                      "type": "integer",
+                      "example": 1
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "Byli_nr": {
-                          "type": "string",
-                          "example": "1"
-                        },
-                        "Byli_nafn": {
-                          "type": "string",
-                          "example": "Test Farm"
-                        },
-                        "farm_type": {
-                          "type": "string",
-                          "example": "Livestock"
-                        },
-                        "value": {
-                          "type": "integer",
-                          "example": 75000
-                        },
-                        "rent": {
-                          "type": "integer",
-                          "example": 5000
-                        },
-                        "occupancy_type": {
-                          "type": "string",
-                          "example": "Owner Occupied"
-                        }
-                      }
+                    "name": {
+                      "type": "string",
+                      "example": "Stóri-Núpur"
+                    },
+                    "district": {
+                      "type": "string",
+                      "example": "Árnessýsla"
+                    },
+                    "value": {
+                      "type": "number",
+                      "example": 60
+                    },
+                    "occupants": {
+                      "type": "integer",
+                      "example": 12
                     }
                   }
                 }
@@ -244,47 +209,72 @@
       "get": {
         "tags": ["Livestock"],
         "summary": "Get cattle statistics",
+        "description": "Returns statistics about cattle ownership and distribution",
         "responses": {
           "200": {
-            "description": "Success",
+            "description": "Successful response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
+                    "total": {
+                      "type": "number",
+                      "example": 5000
                     },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "total": {
-                          "type": "integer",
-                          "example": 1000
-                        },
-                        "details": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "type": "string",
-                                "example": "Cattle"
-                              },
-                              "category": {
-                                "type": "string",
-                                "example": "Dairy"
-                              },
-                              "count": {
-                                "type": "integer",
-                                "example": 500
-                              },
-                              "total_value": {
-                                "type": "integer",
-                                "example": 250000
-                              }
-                            }
+                    "byDistrict": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "district": {
+                            "type": "string",
+                            "example": "Árnessýsla"
+                          },
+                          "count": {
+                            "type": "number",
+                            "example": 500
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/statistics/demographics/age-gender": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get age and gender statistics",
+        "description": "Returns population statistics broken down by age groups and gender",
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ageGroups": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "range": {
+                            "type": "string",
+                            "example": "0-10"
+                          },
+                          "male": {
+                            "type": "number",
+                            "example": 2500
+                          },
+                          "female": {
+                            "type": "number",
+                            "example": 2300
                           }
                         }
                       }

@@ -7,6 +7,7 @@ const swaggerDocument = require('./swagger.json');
 const errorHandler = require('./middleware/errorHandler');
 const rateLimiter = require('./middleware/rateLimiter');
 const logger = require('./config/logger');
+const displayServerInfo = require('./utils/serverInfo');
 
 const populationRoutes = require('./routes/populationRoutes');
 const statisticsRoutes = require('./routes/statisticsRoutes');
@@ -29,8 +30,14 @@ app.use(morgan('combined', { stream: { write: message => logger.info(message.tri
 // Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
   customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: "1703 Census API Documentation"
+  customSiteTitle: "1703 Census API Documentation",
+  customfavIcon: "https://raw.githubusercontent.com/Asdisarson/1703/main/public/favicon.ico"
 }));
+
+// Root route redirects to API documentation
+app.get('/', (req, res) => {
+  res.redirect('/api-docs');
+});
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -64,8 +71,15 @@ module.exports = app;
 // Start server if not testing
 if (process.env.NODE_ENV !== 'test') {
   const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => {
-    logger.info(`Server running on port ${PORT}`);
-    logger.info(`API Documentation available at http://localhost:${PORT}/api-docs`);
+  const server = app.listen(PORT, () => {
+    displayServerInfo(app, PORT);
+  });
+
+  // Handle server shutdown gracefully
+  process.on('SIGTERM', () => {
+    logger.info('SIGTERM signal received: closing HTTP server');
+    server.close(() => {
+      logger.info('HTTP server closed');
+    });
   });
 } 
